@@ -1,0 +1,9 @@
+LICENSE
+README.md
+setup.py
+webscraping/__init__.py
+webscraping/seleniumScraping.py
+webscraping.egg-info/PKG-INFO
+webscraping.egg-info/SOURCES.txt
+webscraping.egg-info/dependency_links.txt
+webscraping.egg-info/top_level.txt

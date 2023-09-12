@@ -6,6 +6,17 @@ from time import sleep
 from typing import Union
 import requests
 
+
+__all__ = [
+    "click"
+    , "goToWebsite"
+    , "input"
+    , "element"
+    , "elements"
+    , "execute"
+    , "downloadOnline Media"
+]
+
 # Basic Selenium Scaping Functions
 
 def click(xpath:str, item:Union[WebElement, Chrome]) -> None:
