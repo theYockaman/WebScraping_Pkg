@@ -5,6 +5,7 @@ from selenium.webdriver.remote.webelement import WebElement
 from time import sleep
 from typing import Union
 import requests
+from utils.functions import checkType
 
 
 __all__ = [
@@ -14,7 +15,7 @@ __all__ = [
     , "element"
     , "elements"
     , "execute"
-    , "downloadOnline Media"
+    , "downloadOnlineMedia"
 ]
 
 # Basic Selenium Scaping Functions
@@ -27,6 +28,10 @@ def click(xpath:str, item:Union[WebElement, Chrome]) -> None:
     :param item: Page or Element based from XPATH
     :type item: Union[WebElement,webdriver.Chrome]
     """
+    
+    # Check Type
+    checkType([xpath,item],[str,[WebElement, Chrome]])
+    
     # Click XPATH
     element(xpath, item).click()
     sleep(5)
@@ -39,6 +44,11 @@ def goToWebsite(website:str, item:Union[WebElement, Chrome]) -> None:
     :param item: Page or Element based from XPATH
     :type item: Union[WebElement,webdriver.Chrome]
     """
+    
+    # Check Type
+    checkType([website,item],[str,[WebElement, Chrome]])
+    
+    # Go to the Website
     item.get(website)
     sleep(5)
 
@@ -52,6 +62,11 @@ def input(input:str, xpath:str, item:Union[WebElement, Chrome]) -> None:
     :param item: Page or Element based from XPATH
     :type item: Union[WebElement,webdriver.Chrome]
     """
+    
+    # Check Type
+    checkType([input,xpath,item],[str, str,[WebElement, Chrome]])
+    
+    # Send an Input
     element(xpath, item).send_keys(input)
     sleep(5)
         
@@ -65,6 +80,8 @@ def element(xpath:str, item:Union[WebElement, Chrome]) -> WebElement:
     :return: Selenium XPATH Element
     :rtype: WebElement
     """
+    # Check Type
+    checkType([xpath,item],[str,[WebElement, Chrome]])
     
     # Selenium Element
     return item.find_element(By.XPATH,xpath)
@@ -79,7 +96,10 @@ def elements(xpath:str, item:Union[WebElement, Chrome]) -> list[WebElement]:
     :return: Selenium XPATH Elements
     :rtype: WebElement
     """
+    # Check Type
+    checkType([xpath,item],[str,[WebElement, Chrome]])
     
+    # Get the Elements
     return item.find_elements(By.XPATH,xpath)
     
 def execute(javaScript:str, item:Union[WebElement, Chrome],*args) -> None:
@@ -87,21 +107,30 @@ def execute(javaScript:str, item:Union[WebElement, Chrome],*args) -> None:
 
     :param javaScript: JavaScript Code to Run on Item or Page
     :type javaScript: str
-    :param item: _description_
+    :param item: WebDriver and Element of the Website
     :type item: Union[WebElement,webdriver.Chrome]
     """
+    # Check Type
+    checkType([javaScript,item],[str,[WebElement, Chrome]])
+    
+    # Execute Script
     item.execute_script(javaScript,args)
     sleep(5)
 
 def downloadOnlineMedia(mediaUrl:str, directoryMedia:str) -> None:
-    """
+    """Download Media from URL
 
-    :param mediaUrl: URL of Media stored Online
+    :param mediaUrl: URL of Photo or Video
     :type mediaUrl: str
-    :param directoryMedia: Directory to Store Media
+    :param directoryMedia: Stored Download Media with correct Extensions
     :type directoryMedia: str
     """
+    # Check Types
+    checkType([mediaUrl,directoryMedia],[str,str])
+    
+    # Writes Photos and Videos
     img_data = requests.get(mediaUrl).content
+    
     with open(directoryMedia, mode="wb") as f:
         f.write(img_data)
         
