@@ -135,3 +135,7 @@ def downloadOnlineMedia(mediaUrl:str, directoryMedia:str) -> None:
         f.write(img_data)
         
         
+# All Attributes of a Element
+      
+    # attrs = self.driver.execute_script('var items = {}; for (index = 0; index < arguments[0].attributes.length; ++index) { items[arguments[0].attributes[index].name] = arguments[0].attributes[index].value }; return items;', likeBtn)
+            # print(attrs)   
