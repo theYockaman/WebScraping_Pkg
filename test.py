@@ -548,3 +548,6 @@ class instabot:
 
 
 
+
+
+b = instabot('the.fishing.frenzy','nate51025')
