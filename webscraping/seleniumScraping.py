@@ -11,7 +11,7 @@ from utils.functions import checkType
 __all__ = [
     "click"
     , "goToWebsite"
-    , "input"
+    , "elementInput"
     , "element"
     , "elements"
     , "execute"
@@ -52,7 +52,7 @@ def goToWebsite(website:str, item:Union[WebElement, Chrome]) -> None:
     item.get(website)
     sleep(5)
 
-def input(input:str, xpath:str, item:Union[WebElement, Chrome]) -> None:
+def elementInput(input:str, xpath:str, item:Union[WebElement, Chrome]) -> None:
     """Input into XPATH
 
     :param input: Input Value

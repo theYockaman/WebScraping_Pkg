@@ -10,6 +10,11 @@ from utils.file import JSON, Folder
 from datetime import datetime
 import os
 
+from webscraping.seleniumScraping import *
+
+
+
+
 class instabot:
     
     # Selenium Options Variable
@@ -57,13 +62,13 @@ class instabot:
         self._checkDriver()
         
         # Return to Instagram Home Page
-        self.driver.get("https://www.instagram.com")
+        goToWebsite("https://www.instagram.com",self.driver)
         sleep(5)
         
         try:
             # Not Now Btn
-            self.driver.find_element(By.XPATH,'/html/body/div[2]/div/div/div[2]/div/div/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/button[2]').click()
-            sleep(5)
+            click('/html/body/div[2]/div/div/div[2]/div/div/div[1]/div/div[2]/div/div/div/div/div[2]/div/div/div[3]/button[2]',self.driver)
+            
         except:
             pass
 
@@ -123,33 +128,22 @@ class instabot:
         # Opens Instagram
         self._goToHomePage()
 
-        # Retrieve the Input Fields for Username and Password
-        usernameInput = self.driver.find_element(By.NAME,"username")
-        passwordInput =  self.driver.find_element(By.NAME, "password")
-
         # Enter the Username and Password
-        usernameInput.send_keys(username)
-        passwordInput.send_keys(password)
-        sleep(10)
+        elementInput(username,'//*[@name="username"]',self.driver)
+        elementInput(password, '//*[@name="password"]',self.driver)
 
         # Find and click Login Button
-        loginBtn = self.driver.find_element(By.XPATH,'//button[@type="submit"]')
-        loginBtn.click()
-        sleep(10)
+        click('//button[@type="submit"]',self.driver)
 
         # NotNow To not Save Login info
         try:
-            notNowBtn = self.driver.find_element(By.XPATH, "//button[contains(text(), 'Not Now')]")
-            notNowBtn.click()
-            sleep(5)
+            click("//button[contains(text(), 'Not Now')]",self.driver)
         except:
             pass
 
         # Turn on Notifications Not Now
         try:
-            notNow = self.driver.find_element(By.XPATH, "//button[contains(text(), 'Not Now')]")
-            notNow.click()
-            sleep(5)
+            click("//button[contains(text(), 'Not Now')]",self.driver)
         except:
             pass
 
@@ -247,11 +241,11 @@ class instabot:
         # Retrieve Top Hashtag Posts
         while True:
             try:
-                topPostsArea = self.driver.find_element(By.XPATH,"//article/div[@class ='_aaq8']/div")
+                topPostsArea = self.driver.find_element(By.XPATH,"//article[]")
                 break
             except:
                 self._goToHashtag(hashtag)
-                sleep(5)
+                sleep(20)
 
         # Retrieve the Top Posts
         postLinks = [x.get_attribute('href') for x in topPostsArea.find_elements(By.TAG_NAME,'a')]
@@ -551,3 +545,11 @@ class instabot:
 
 
 b = instabot('the.fishing.frenzy','nate51025')
+
+posts = b.topHashtagPosts('fishing')
+for x, post in enumerate(posts):
+    b.likePost(post)
+    print(f"Liked {x+1} photo")
+    
+    if x+1 == 20:
+        break  
